@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini E-Commerce</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container-fluid h-100vh">
+      <div class="row h-100">
+        <div class="col-md-2 d-none d-lg-flex flex-column nav-sidebar p-4">
+          <div
+            class="mb-5 d-flex align-items-center gap-2 text-primary fw-bold fs-4"
+          >
+            <span>🐼</span> JoshPanda
+          </div>
+
+          <nav class="nav flex-column">
+            <a class="nav-btn fw-bold"
+              ><span class="nav-icon">😋</span> Menu
+            </a>
+          </nav>
+        </div>
+        <div class="col-12 col-lg-7 product-stage d-flex flex-column p-0">
+          <div
+            class="sticky-top bg-white bg-opacity-75 backdrop-blur p-4 border-bottom z-1"
+          >
+            <div class="row align-items-center">
+              <div class="col">
+                <h4 class="fw-bold m-0">Inventory</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 flex-grow-1">
+            <div
+              id="productList"
+              class="row row-cols-2 row-cols-md-3 row-cols-xl-3 g-3"
+            ></div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 ticket-sidebar h-100 p-0">
+          <div
+            class="p-4 bg-white border-bottom d-flex justify-content-between align-items-center"
+          >
+            <span class="fw-bold text-muted">🛒 Cart</span>
+            <button
+              onclick="clearCart()"
+              class="btn btn-sm text-danger bg-danger-subtle fw-bold rounded-pill px-3"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div
+            class="flex-grow-1 overflow-auto p-3 bg-white"
+            id="cartContainer"
+          >
+            <div
+              id="emptyCartMessage"
+              class="text-center py-5 text-muted opacity-50"
+            >
+              <div class="fs-1 mb-2">🧾</div>
+              <small class="fw-bold">NO ITEMS</small>
+            </div>
+          </div>
+
+          <div class="p-3 border-top bg-white shadow-lg z-2">
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1 small text-muted">
+                <span>Subtotal</span> <span id="subtotal">₱0.00</span>
+              </div>
+              <div
+                class="d-flex justify-content-between mb-1 small text-success"
+              >
+                <span>Discount</span> <span id="discount">-₱0.00</span>
+              </div>
+              <div class="d-flex justify-content-between mb-1 small text-muted">
+                <span>Tax (12%)</span> <span id="tax">₱0.00</span>
+              </div>
+
+              <div
+                class="d-flex justify-content-between mb-2 small text-primary"
+              >
+                <span>Shipping</span> <span id="shipping">Free</span>
+              </div>
+
+              <div
+                class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3 border"
+              >
+                <span class="fw-bold text-dark">Total</span>
+                <span id="grandTotal" class="fw-bold text-primary fs-4"
+                  >₱0.00</span
+                >
+              </div>
+            </div>
+
+            <form id="checkoutForm" novalidate>
+              <div class="mb-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fullName"
+                  placeholder="Customer Name"
+                  required
+                />
+              </div>
+              <div class="row g-2 mb-2">
+                <div class="col-6">
+                  <select class="form-select" id="paymentMethod" required>
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                    <option value="GCash">GCash</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <select
+                    class="form-select"
+                    id="deliveryOption"
+                    onchange="toggleAddress(this.value === 'Delivery')"
+                  >
+                    <option value="Pickup">Pickup</option>
+                    <option value="Delivery">Delivery</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-2 d-none" id="addressFieldDiv">
+                <textarea
+                  class="form-control"
+                  id="address"
+                  rows="1"
+                  placeholder="Address..."
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 shadow-sm">
+                CONFIRM ORDER
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="receiptModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+          <div class="modal-header bg-primary text-white">
+            <h6 class="modal-title fw-bold">Receipt Generated</h6>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body p-4 bg-light" id="receiptBody"></div>
+          <div class="modal-footer bg-white border-0">
+            <button
+              type="button"
+              class="btn btn-sm btn-light"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-primary"
+              onclick="window.print()"
+            >
+              Print
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
